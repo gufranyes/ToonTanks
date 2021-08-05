@@ -23,6 +23,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))	
 	float RotateSpeed = 100.0f;
 
+	APlayerController* PlayerControllerRef;
 	void CalculateMoveInput(float Value);
 	void CalculateRotationInput(float Value);
 
@@ -37,14 +38,15 @@ public:
 
 	APawnTank();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	virtual void HandleDestruction() override;
+	
 };

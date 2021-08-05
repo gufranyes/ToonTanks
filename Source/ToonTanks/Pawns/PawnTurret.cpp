@@ -2,6 +2,7 @@
 
 
 #include "PawnTurret.h"
+#include "PawnTank.h"
 
 // Sets default values
 APawnTurret::APawnTurret()
@@ -16,7 +17,14 @@ APawnTurret::APawnTurret()
 void APawnTurret::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	GetWorld() -> GetTimerManager().SetTimer(FireRateTimerHandle, this, &APawnTurret::CheckFireCondition, FireRate, true);
+	PlayerPawn = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
+}
+
+void APawnTurret::HandleDestruction() 
+{
+	Super::HandleDestruction();
+	Destroy();
 }
 
 // Called every frame
@@ -24,11 +32,31 @@ void APawnTurret::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	if (!PlayerPawn || RangeToPlayer() > FireRange)
+	{
+		return;
+	}
+	RotateTurretFunction(PlayerPawn -> GetActorLocation());
 }
 
-// Called to bind functionality to input
-void APawnTurret::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void APawnTurret::CheckFireCondition() 
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+	if (!PlayerPawn)
+	{
+		return;
+	}
+	if (RangeToPlayer() <= FireRange)
+	{
+		Fire();
+	}
+}
+
+float APawnTurret::RangeToPlayer() 
+{
+	if (!PlayerPawn)
+	{
+		return 0.0f;
+	}
+	return FVector::Dist(PlayerPawn->GetActorLocation(), GetActorLocation());
 }

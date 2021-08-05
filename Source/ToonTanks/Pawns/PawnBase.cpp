@@ -23,4 +23,22 @@ APawnBase::APawnBase()
 	ProjectileSpawnPoint -> SetupAttachment(TurretMesh);
 }
 
+void APawnBase::RotateTurretFunction(FVector LookAtTarget) 
+{
+	FVector LookAtTargetCleaned = FVector(LookAtTarget.X, LookAtTarget.Y, TurretMesh->GetComponentLocation().Z);
+	FVector StartLocation = TurretMesh -> GetComponentLocation();
+	FRotator TurretRotation = FVector(LookAtTargetCleaned - StartLocation).Rotation();
+	TurretMesh -> SetWorldRotation(TurretRotation);
+}
+
+void APawnBase::Fire() 
+{
+	UE_LOG(LogTemp, Warning, TEXT("Fire Condition Success!"));
+}
+
+void APawnBase::HandleDestruction() 
+{
+	
+}
+
 
