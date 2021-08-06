@@ -29,7 +29,10 @@ void APawnTank::BeginPlay()
 void APawnTank::HandleDestruction() 
 {
 	Super::HandleDestruction();
-	Destroy();
+
+	bIsPlayerAlive = false;
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
 }
 
 // Called every frame
@@ -47,6 +50,11 @@ void APawnTank::Tick(float DeltaTime)
 		RotateTurretFunction(HitLocation);
 	}
 	
+}
+
+bool APawnTank::GetIsPlayerAlive() 
+{
+	return bIsPlayerAlive;
 }
 
 // Called to bind functionality to input

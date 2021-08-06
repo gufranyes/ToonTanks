@@ -23,6 +23,8 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))	
 	float RotateSpeed = 100.0f;
 
+	bool bIsPlayerAlive = true;
+
 	APlayerController* PlayerControllerRef;
 	void CalculateMoveInput(float Value);
 	void CalculateRotationInput(float Value);
@@ -40,6 +42,8 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	bool GetIsPlayerAlive();
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
