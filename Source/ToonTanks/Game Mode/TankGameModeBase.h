@@ -17,6 +17,7 @@ class TOONTANKS_API ATankGameModeBase : public AGameModeBase
 private:
 	APawnTank* PlayerTank;
 	int32 TargetTurrets = 0;
+	
 
 	int32 GetTargetTurretsCount();
 	void HandleGameStart();
@@ -26,6 +27,9 @@ private:
 public:
 	void ActorDied(AActor* DeadActor);
 protected:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Game Loop")
+	int32 StartDelay = 3;
 
 	virtual void BeginPlay();
 	UFUNCTION(BlueprintImplementableEvent)
