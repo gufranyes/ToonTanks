@@ -10,7 +10,7 @@ void ATankGameModeBase::BeginPlay()
 
 void ATankGameModeBase::ActorDied(AActor* DeadActor) 
 {
-    
+    UE_LOG(LogTemp, Warning, TEXT("Actor Died!"));
 }
 
 void ATankGameModeBase::HandleGameStart() 
